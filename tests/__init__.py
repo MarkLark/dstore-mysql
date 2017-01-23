@@ -24,9 +24,9 @@ class BaseTest( TestCase ):
             self.store.init_app()
             self.store.set_config({
                 "DSTORE_DB_HOST"  : "localhost",
-                "DSTORE_DB_USER"  : "flask",
-                "DSTORE_DB_PASSWD": "flask123",
-                "DSTORE_DB_DB"    : "flask"
+                "DSTORE_DB_USER"  : "root",
+                "DSTORE_DB_PASSWD": "",
+                "DSTORE_DB_DB"    : "dstore_test"
             })
             self.store.connect()
         if self.auto_create: self.store.create_all()
