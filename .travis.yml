@@ -1,4 +1,4 @@
-sudo: false
+sudo: true
 language: python
 python:
   - 2.7
@@ -7,6 +7,12 @@ python:
   - 3.4
   - 3.5
   - 3.6
+services:
+  - mysql
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y python-dev libmysqlclient-dev
+  - mysql -e 'CREATE DATABASE dstore_test;'
 install:
   - pip install -q -r dev_requirements.txt
 script:
