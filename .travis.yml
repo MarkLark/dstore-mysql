@@ -10,5 +10,8 @@ before_install:
   - mysql -e 'CREATE DATABASE dstore_test;'
 install:
   - pip install -q -r dev_requirements.txt
+  - pip install coveralls
 script:
-  - nosetests -vs tests
+  - nosetests -vs tests --with-coverage --cover-package=dstore_mysql
+after_success:
+  - coveralls
