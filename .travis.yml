@@ -10,7 +10,7 @@ services:
   - mysql
 before_install:
   - if [[ $TRAVIS_PYTHON_VERSION == 2* ]]; then sudo apt-get -qq update; fi
-  - if [[ $TRAVIS_PYTHON_VERSION == 2* ]]; then apt-get install -y python-dev libmysqlclient-dev; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == 2* ]]; then sudo apt-get install -y python-dev libmysqlclient-dev; fi
   - mysql -e 'CREATE DATABASE dstore_test;'
 install:
   - if [[ $TRAVIS_PYTHON_VERSION == 2* ]]; then pip install MySQL-python; fi
