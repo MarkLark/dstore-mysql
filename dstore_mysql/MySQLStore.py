@@ -1,24 +1,22 @@
 from dstore import Store, mod, var
 from dstore.Error import InstanceNotFound
 from .SQL import SQL
-import MySQLdb
-import MySQLdb.cursors
+
+try:
+    import MySQLdb
+    from .MySQL2 import MySQL2 as MySQL
+except ImportError:
+    pass
 
 
 class MySQLStore( Store ):
     def __init__( self, models, name = "DataStore", config = None, config_prefix = "DSTORE_", con_cache = None ):
         super( MySQLStore, self ).__init__( models, name, config, config_prefix, con_cache )
         self.sql = SQL()
+        self.mysql = MySQL( self )
 
     def init_app( self ):
-        self.set_config_defaults({
-            "DSTORE_DB_HOST"       : "localhost",
-            "DSTORE_DB_USER"       : None,
-            "DSTORE_DB_PASSWD"     : None,
-            "DSTORE_DB_DB"         : None,
-            "DSTORE_DB_CURSORCLASS": MySQLdb.cursors.DictCursor
-        })
-
+        self.set_config_defaults( self.mysql.config_defaults )
         super( MySQLStore, self ).init_app()
 
     @staticmethod
@@ -27,7 +25,7 @@ class MySQLStore( Store ):
 
     def connect( self ):
         self.events.before_connect( self )
-        con = MySQLdb.connect( **self.get_configs( prefix = "DSTORE_DB_" ) )
+        con = self.mysql.connect()
         self.events.after_connect( self )
         return con
 
