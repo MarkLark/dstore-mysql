@@ -10,7 +10,7 @@ with open( path.join( root_dir, 'README.rst' ), encoding = 'utf-8' ) as f:
 
 setup(
     name='DStore-MySQL',
-    version='0.1.0a1',
+    version='0.1.0a2',
     url = 'https://github.com/MarkLark/dstore-mysql',
     license='MIT',
     author='Mark Pittaway',
