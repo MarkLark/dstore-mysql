@@ -1,6 +1,7 @@
 from dstore import Model, var, mod
 from dstore_mysql import MySQLStore
 from unittest import TestCase
+from os import environ
 
 
 class Car( Model ):
@@ -22,12 +23,21 @@ class BaseTest( TestCase ):
         if self.auto_init:
             self.store = MySQLStore( self.models )
             self.store.init_app()
-            self.store.set_config({
-                "DSTORE_DB_HOST"  : "localhost",
-                "DSTORE_DB_USER"  : "root",
-                "DSTORE_DB_PASSWD": "",
-                "DSTORE_DB_DB"    : "dstore_test"
-            })
+
+            if environ.get( "VM" ) is None:
+                self.store.set_config({
+                    "DSTORE_DB_HOST"  : "localhost",
+                    "DSTORE_DB_USER"  : "root",
+                    "DSTORE_DB_PASSWD": "",
+                    "DSTORE_DB_DB"    : "dstore_test"
+                })
+            else:
+                self.store.set_config({
+                    "DSTORE_DB_HOST"  : "localhost",
+                    "DSTORE_DB_USER"  : "flask",
+                    "DSTORE_DB_PASSWD": "flask123",
+                    "DSTORE_DB_DB"    : "flask"
+                })
             self.store.connect()
         if self.auto_create: self.store.create_all()
 

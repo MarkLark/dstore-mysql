@@ -24,8 +24,8 @@ class VM( pyman.Page ):
         self.add([
             pyman.Actions.Cmd( "Push Code",        "rsync -aP --delete . %s:~/%s" % ( self.host, self.dir ) ),
             pyman.Actions.Cmd( "Pull Code",        "rsync -aP %s:~/%s/ ." % ( self.host, self.dir ) ),
-            pyman.Actions.Cmd( "Test",             'ssh -t %s "cd ~/%s; time nosetests -v --cover-branches --with-coverage --cover-erase --cover-package=%s --cover-html"' % ( self.host, self.dir, self.pkg ) ),
-            pyman.Actions.Cmd( "Test With Stdout", 'ssh -t %s "cd ~/%s; time nosetests -vs --cover-branches --with-coverage --cover-erase --cover-package=%s --cover-html"' % ( self.host, self.dir, self.pkg) ),
+            pyman.Actions.Cmd( "Test",             'ssh -t %s "cd ~/%s; export VM=1; time nosetests -v --cover-branches --with-coverage --cover-erase --cover-package=%s --cover-html"' % ( self.host, self.dir, self.pkg ) ),
+            pyman.Actions.Cmd( "Test With Stdout", 'ssh -t %s "cd ~/%s; export VM=1; time nosetests -vs --cover-branches --with-coverage --cover-erase --cover-package=%s --cover-html"' % ( self.host, self.dir, self.pkg) ),
             pyman.Actions.Cmd( "Pull Coverage",    "rsync -aP %s:~/%s/cover/ cover/ &> /dev/null; google-chrome cover/index.html" % ( self.host, self.dir ) ),
             pyman.Actions.Cmd( "Open Coverage",    "google-chrome cover/index.html" ),
             pyman.Actions.Cmd( "PyTerm",           'ssh -t %s "cd ~/%s; python"' % ( self.host, self.dir ) ),
