@@ -6,7 +6,7 @@ try:
     import MySQLdb
     from .MySQL2 import MySQL2 as MySQL
 except ImportError:
-    pass
+    from .MySQL3 import MySQL3 as MySQL
 
 
 class MySQLStore( Store ):

@@ -2,4 +2,3 @@ nose
 coverage
 pyman
 dstore
-MySQL-python
