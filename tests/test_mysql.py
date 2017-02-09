@@ -1,4 +1,4 @@
-from nose.tools import ok_, eq_, raises, assert_raises
+from nose.tools import ok_, eq_, raises
 from . import BaseTest, Car
 from dstore.Error import InstanceNotFound
 
@@ -46,11 +46,10 @@ class Cars( BaseTest ):
         eq_( car.make,         "Commodore", "Car.make != 'Commodore'" )
         eq_( car.year,         2007,        "Car.year  %d != 2007" % car.year )
 
+    @raises( InstanceNotFound )
     def test_get_none( self ):
         Car( manufacturer = "Holden", make = "Commodore", year = 2005 ).add()
-
-        with assert_raises( InstanceNotFound ):
-            Car.get( 3 )
+        Car.get( 3 )
 
     def test_delete( self ):
         Car( manufacturer = "Holden", make = "Commodore", year = 2005 ).add()
@@ -82,6 +81,7 @@ class Cars( BaseTest ):
 
         eq_( isinstance( car, Car ), True, "Didn't return a single instance" )
 
+    @raises( InstanceNotFound )
     def test_filter_none( self ):
         Car( manufacturer = "Holden", make = "Commodore", year =2005 ).add()
         Car( manufacturer = "Holden", make = "Commodore", year =2006 ).add()
@@ -89,8 +89,7 @@ class Cars( BaseTest ):
         Car( manufacturer = "Holden", make = "Rodeo",     year =2008 ).add()
         Car( manufacturer = "Holden", make = "Colorado",  year =2009 ).add()
 
-        with assert_raises( InstanceNotFound ):
-            Car.filter( make = "Gummy" )
+        Car.filter( make = "Gummy" )
 
     def test_filter_like( self ):
         Car( manufacturer = "Holden", make = "Commodore", year = 2005 ).add()

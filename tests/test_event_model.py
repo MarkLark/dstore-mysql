@@ -1,6 +1,5 @@
-from nose.tools import ok_, eq_, raises, assert_raises
+from nose.tools import eq_, raises
 from . import BaseTest, Car
-from dstore import MemoryStore, Model, var, mod
 from dstore.Error import EventNotFound, EventListenerNotFound, InstanceNotFound
 
 
@@ -14,8 +13,7 @@ class CancelAdd( BaseTest ):
         Car( manufacturer = "Holden", make = "Commodore", year = 2005 ).add()
         Car.events.before_add -= self.before_addd
 
-        with assert_raises( InstanceNotFound ):
-            Car.get( 0 )
+        self.assertRaises( InstanceNotFound, Car.get, 0 )
 
         eq_( self.action, True, "before_add was not executed" )
 
